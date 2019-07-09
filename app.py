@@ -257,7 +257,20 @@ def delete_article(id):
     flash('Article Deleted  ','success')
 
     return redirect(url_for('dashboard'))
+    
+@app.route('/data')
+def data_info():
+     #create cursor
+    cur = mysql.connection.cursor()
 
+    #get articles
+    result = cur.execute("SELECT * FROM coin_yahoo_daily")
+
+    data = cur.fetchall()
+    print(data)
+    cur.close()
+
+    return render_template('data_info.html', data = data)
 
 if __name__ == '__main__':
     app.secret_key='secret123'
